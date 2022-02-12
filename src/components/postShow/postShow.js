@@ -157,7 +157,7 @@ function PostShow(props) {
                         <p>Я тут был, очень понравилось</p>
                     </div>  
                 </Comments>
-                <CloseButton></CloseButton>
+                <CloseButton onClick={props.onHide}></CloseButton>
             </ModalDialog>
         </Modal>
     )

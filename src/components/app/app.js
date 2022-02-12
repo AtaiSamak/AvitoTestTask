@@ -9,7 +9,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postShow: true
+            postShow: false
         }
     }
 
@@ -18,7 +18,6 @@ export default class App extends Component {
     }
 
     render() {
-        console.log(this.state.postShow);
         return (
             <>
                 <Container className="position-fixed top-50 start-50 translate-middle">
