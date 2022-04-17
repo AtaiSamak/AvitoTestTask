@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './postShow.css';
 import styled, { css } from 'styled-components';
 
@@ -14,8 +14,8 @@ const Modal = styled.div`
     right: 0;
     z-index: 1000;
 
-    opacity: ${props => props.active ? '1': '0'};
-    pointer-events: ${props => props.active ? 'auto': 'none'};
+    opacity: ${props => props.active ? '1' : '0'};
+    pointer-events: ${props => props.active ? 'auto' : 'none'};
 `;
 
 const ModalDialog = styled.div`
@@ -135,32 +135,45 @@ const CloseButton = styled.div`
     }
 `;
 
-function PostShow(props) {
+const getCommentElement = (comment) => {
+    const { text, id, date } = comment;
+    const dateFormat = new Date(date).toLocaleDateString().split('/').join('.');
     return (
-        <Modal active={props.show}>
-            <ModalDialog>
-                <Content>
-                    <img src="https://kharkiv-travel.com/wp-content/uploads/2021/12/Travel000000.jpg" alt="travel"/>
-                    <Form>
-                        <input type="text" placeholder="Ваше имя"/>
-                        <input type="text" placeholder="Ваш комментарий"/>
-                        <button type="submit">Оставить комментарий</button>
-                    </Form>
-                </Content>
-                <Comments>
-                    <div>
-                        <time>18.12.2019</time>
-                        <p>Отличное фото</p>
-                    </div>
-                    <div>
-                        <time>18.12.2019</time>
-                        <p>Я тут был, очень понравилось</p>
-                    </div>  
-                </Comments>
-                <CloseButton onClick={props.onHide}></CloseButton>
-            </ModalDialog>
-        </Modal>
+        <div key={id}>
+            <time>{dateFormat}</time>
+            <p>{text}</p>
+        </div>
     )
+}
+
+class PostShow extends Component {
+    render() {
+        const { show, onHide, postData, addComment } = this.props;
+        const { url, comments, id } = postData;
+        const commentElements = comments.map((comment) => getCommentElement(comment));
+        return (
+            <Modal active={show}>
+                <ModalDialog>
+                    <Content>
+                        <img src={url} alt="travel" />
+                        <Form>
+                            <input type="text" placeholder="Ваше имя" name="name" />
+                            <input type="text" placeholder="Ваш комментарий" name="comment" />
+                            <button
+                                type="submit"
+                                onClick={(e) => addComment(e, e.target.parentNode, id)}
+                            >Оставить комментарий</button>
+                        </Form>
+                    </Content>
+                    <Comments>
+                        {commentElements}
+                    </Comments>
+                    <CloseButton onClick={onHide}></CloseButton>
+                </ModalDialog>
+            </Modal>
+        )
+    }
+
 }
 
 export default PostShow;

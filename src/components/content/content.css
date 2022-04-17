@@ -1,16 +1,14 @@
-/* Row styles */
-.my-row-styles {
-  margin: 0 10px 30px;
-}
-
 /* Col styles */
 .my-col-styles {
+  min-width: 229px;
   max-width: 229px;
   max-height: 142px;
+  width: 100%;
+  height: 100%;
 
   overflow: hidden;
 
-  margin: 0 10px;
+  margin: 0 10px 20px;
   padding: 0;
 
   cursor: pointer;
